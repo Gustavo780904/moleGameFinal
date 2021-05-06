@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&family=Odibee+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/tabuleiro.css">
+    <link rel="stylesheet" href="css/jAlertWifi.css">
+    <script src="js/jAlertWifi.js"></script>
+
+    <script src="js/game.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="">
+                <p>Time: 00:<span id="chrono">00</span></p>
+            </div>
+            <div class="">
+                <p>User: <span id="usuario">Gustavo</span></p>
+            </div>
+            <div class="">
+                <p>Score: <span id="score">0</span></p>
+            </div>
+            <div class="">
+                <h1>Mole Game</h1>
+            </div>
+            <div class="">
+                <label for="level">Level</label>
+                <select class="alert-dark" name="nivel" id="level" disabled onchange="fillboard()">
+            <option value="easy" selected>Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+            </select>
+                <button class="btn btn-sm btn-success" id="btnPlay">Play</button>
+                <button class="btn btn-sm btn-success" id="btnResume" disabled>Resume</button>
+                <button class="btn btn-sm btn-info" id="btnPause" disabled>Pause</button>
+                <button class="btn btn-sm btn-info" id="btnStop" disabled>Stop</button>
+                <button class="btn btn-sm btn-danger" id="btnExit">Exit</button>
+            </div>
+        </nav>
+
+    </header>
+    <main>
+        <section>
+            <div>
+                <div id="board"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy " crossorigin="anonymous "></script>
+</body>
+
+</html>
