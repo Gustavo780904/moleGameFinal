@@ -18,18 +18,31 @@ body {
 header,
 footer {
     /* border: 1px solid black; */
-    /* height: 50px; */
+    height: 52px;
     /* margin: auto;
     float: left; */
 }
 
 nav {
     background-color: rgb(86, 86, 251);
+    height: 50px;
+    width: 100%;
 }
 
 nav,
 p {
-    font-size: 20px;
+    font-size: 18px;
+}
+
+#abb,
+#abbc {
+    width: 85%;
+    /* display: block; */
+}
+
+.tableRanking {
+    border: 1px solid white;
+    color: white;
 }
 
 

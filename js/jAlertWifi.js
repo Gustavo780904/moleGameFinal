@@ -16,6 +16,8 @@
 // - $countTimer: valor inicial do contador regressivo, caso $hasTimer for true
 // - $srcImg: caminho + nome da imagem a ser exibida no painel de informações
 // - $fontSize: tamanho da fonte do texto
+// - $exit: *true chamada na função exit();
+// - $start: *true chamada na função start();
 // Exemplos:
 //  showPanelInfo("",true,3,"","100"): exibe o painel de informacoes com o texto inicialmente em 3 até chegar 0 e depois o painel desaparece
 //  showPanelInfo("Fim de jogo",false,0,"img/imagem.gif","200"): exibe o painel com a msg "Fim de jogo" com um btn para fechar a janela
@@ -23,9 +25,12 @@
 function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $start) {
     let $panelInfo = $(`<div></div>`).addClass("panelInfo");
     let $contentPanel = $(`<div></div>`).addClass("contentPanel");
-    // let $contentPanel1 = $(`<div></div>`).addClass("contentPanel");
-    // // let $contentPanel2 = $(`<div></div>`).addClass("contentPanel");
     $($panelInfo).append($contentPanel);
+    let $tableRanking = $(`<table></table>`).addClass("tableRanking contentPanel");
+    let $headerTable = $(`<th>Username</th><th>Score</th>`)
+    $($tableRanking).append($headerTable);
+
+    let $scoreList = (score) => (score.sort)
 
     // Adiciona uma imagem ao painel de informações
     if ($srcImg != "") {
@@ -38,21 +43,21 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
     $($contentPanel).append($txtPanelInfo);
 
     // Se não houver timer exibe um texto fixo ao inves de um cronometro regressivo
+    //msg final ranking
     if (!$hasTimer && !$exit && !$start) {
-        $btnPanelInfo = $("<button></button>").text("Fechar").addClass("button");
+        $btnPanelInfo = $("<button></button>").text("Voltar").addClass("button");
         $($contentPanel).append($btnPanelInfo);
+        $($panelInfo).append($tableRanking);
         $($btnPanelInfo).click(function() { closeAlertWifi($panelInfo) });
-        // } else if (!$hasTimer && !$exit) {
-        //     $btnPanelInfo = $("<button></button>").text("Fechar").addClass("button");
-        //     $($contentPanel).append($btnPanelInfo);
-        //     $($btnPanelInfo).click(function() { closeAlertWifi($panelInfo) });
+        //exibe a mensagen inicial
     } else if (!$hasTimer && !$exit && $start) {
-        $btnPanelInfo = $("<button></button>").text("Fechar").addClass("button");
+        $btnPanelInfo = $("<button></button>").text("Iniciar!").addClass("button");
         $($contentPanel).append($btnPanelInfo);
         $($btnPanelInfo).click(function() {
             closeAlertWifi($panelInfo)
-
+                //ver como começar o jogo depois de clicar em iniciar!
         });
+        //exibe a msg de confirmacao de sair
     } else if (!$hasTimer && $exit && !$start) {
         $btnPanelInfoS = $("<button></button>").text("Sim?").addClass("button");
         $($contentPanel).append($btnPanelInfoS);
@@ -60,13 +65,11 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
             closeAlertWifi($panelInfo);
             window.open("login.html", "_self");
         });
-
         $btnPanelInfoN = $("<button></button>").text("Não?").addClass("button");
         $($contentPanel).append($btnPanelInfoN);
         $($btnPanelInfoN).click(function() {
             closeAlertWifi($panelInfo);
         });
-
     }
 
     // Adiciona o painel de informações ao body

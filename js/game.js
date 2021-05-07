@@ -2,15 +2,106 @@ const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
-const $initialTime = 50;
+const $initialTime = 10;
 
 var $timeGame = $initialTime;
 var $idChronoGame; //setInterval
 var $idChronoStartGame; //startgame
 var $molePosition = 0; //guarda a posição da toupeira
 var $scoreBoard;
+var $level = getLevel();
+var $ranking;
+var $topFive = new Array();
 
 $(document).ready(function() {
+    let users = [{
+                "id": 1,
+                "username": "Gustavo",
+                "pwd": "20",
+                "scores": [{
+                        "id": 2,
+                        "score": 5,
+                        "level": "hard"
+                    },
+                    {
+                        "id": 3,
+                        "score": 10,
+                        "level": "easy"
+                    },
+                    {
+                        "id": 4,
+                        "score": 15,
+                        "level": "easy"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "username": "Elisa",
+                "pwd": "10",
+                "scores": [{
+                    "id": 5,
+                    "score": 150,
+                    "level": "easy"
+                }]
+            },
+            {
+                "id": 3,
+                "username": "Tati",
+                "pwd": "2",
+                "scores": [{
+                        "id": 5,
+                        "score": 20,
+                        "level": "easy"
+                    },
+                    {
+                        "id": 5,
+                        "score": 2,
+                        "level": "easy"
+                    },
+                    {
+                        "id": 5,
+                        "score": 10,
+                        "level": "easy"
+                    }
+                ]
+            }
+        ]
+        // for (var data in users) {
+        //     console.log(users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === 'easy') })));
+        // }
+
+    $ranking = users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === "easy") }));
+    //repetir usando foreach
+    console.log($ranking);
+    for (var data in $ranking.scores) {
+        $topFive[data] = $ranking.username,
+            console.log($ranking.scores)
+    }
+
+    // console.log(users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === `${$level}`) })));
+
+    // for (var data in users) {
+    //     $levelEasy[data] = users[data].scores.filter(scores => scores.level == "easy")
+    //     for (var data in $levelEasy) {
+    //         var $rankingEasy = $levelEasy
+    //     }
+    //     console.log(users[data].username, users[data].scores[data].score)
+    // }
+
+
+    // for (var data in users) {
+
+    //     for (var data in users[data].scores) {
+    //         var score = scores[data].score
+    //         return score
+    //     }
+    //     console.log("Nome na posição " + data + ' = ' + ordemD[data].username + ', ' +
+    //         " score: = " + scores[data].score);
+    // }
+
+
+
     fillboard();
     $("#level").prop("disabled", false);
 
@@ -83,9 +174,11 @@ function resume() {
 
 function pause() {
     $('#chrono').toggleClass('btnPause');
+
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame)
     $(`#mole_${$molePosition}`).attr("src", `img/${$imgsTheme.default}`);
+    $('#chrono').toggleClass('chrono');
 }
 
 function stop() {
@@ -112,7 +205,7 @@ function startChronoGame() {
 }
 
 function endGame() {
-    alertWifi(`Fim de Jogo. Sua pontuação foi = ${$("#score").text()}`, false, 0, "", "50", false, false)
+    alertWifi(`Fim de Jogo. Voce gabhou = ${$("#score").text()} abóboras!`, false, 0, "", "50", false, false)
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
     fillboard();
