@@ -18,19 +18,15 @@
 // - $fontSize: tamanho da fonte do texto
 // - $exit: *true chamada na função exit();
 // - $start: *true chamada na função start();
+// - $actualLevel: informa o nivel da atual partida para a lista do hanking
 // Exemplos:
 //  showPanelInfo("",true,3,"","100"): exibe o painel de informacoes com o texto inicialmente em 3 até chegar 0 e depois o painel desaparece
 //  showPanelInfo("Fim de jogo",false,0,"img/imagem.gif","200"): exibe o painel com a msg "Fim de jogo" com um btn para fechar a janela
 
-function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $start) {
+function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $start, $actualLevel, $ranking) {
     let $panelInfo = $(`<div></div>`).addClass("panelInfo");
     let $contentPanel = $(`<div></div>`).addClass("contentPanel");
     $($panelInfo).append($contentPanel);
-    let $tableRanking = $(`<table></table>`).addClass("tableRanking contentPanel");
-    let $headerTable = $(`<th>Username</th><th>Score</th>`)
-    $($tableRanking).append($headerTable);
-
-    let $scoreList = (score) => (score.sort)
 
     // Adiciona uma imagem ao painel de informações
     if ($srcImg != "") {
@@ -46,9 +42,23 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
     //msg final ranking
     if (!$hasTimer && !$exit && !$start) {
         $btnPanelInfo = $("<button></button>").text("Voltar").addClass("button");
+        $txtInfoLevel = $("<p></p>").html($actualLevel)
+        $($txtInfoLevel).css("font-size", `${$fontSize}px`);
+        $tableRanking = $(`<table></table>`).addClass("tableRanking container");
+        $headerTable = $(`<th>User</th><th>Score</th>`)
         $($contentPanel).append($btnPanelInfo);
-        $($panelInfo).append($tableRanking);
+        $($contentPanel).append($txtInfoLevel);
+        $($contentPanel).append($tableRanking);
+        $($tableRanking).append($headerTable);
+        $tableLine = new Array();
+        $ranking = $ranking.slice(0, 5);
+        for (i = 0; i < $ranking.length; i++) {
+            $tableLine[i] = $(`<tr><td>${$ranking[i].username}</td><td>${$ranking[i].score}</td></tr>`)
+
+        }
+        $($tableRanking).append($tableLine);
         $($btnPanelInfo).click(function() { closeAlertWifi($panelInfo) });
+
         //exibe a mensagen inicial
     } else if (!$hasTimer && !$exit && $start) {
         $btnPanelInfo = $("<button></button>").text("Iniciar!").addClass("button");

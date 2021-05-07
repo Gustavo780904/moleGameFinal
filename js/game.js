@@ -2,7 +2,7 @@ const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
-const $initialTime = 10;
+const $initialTime = 1;
 
 var $timeGame = $initialTime;
 var $idChronoGame; //setInterval
@@ -12,97 +12,13 @@ var $scoreBoard;
 var $level = getLevel();
 var $ranking;
 var $topFive = new Array();
+var $actualLevel;
 
 $(document).ready(function() {
-    let users = [{
-                "id": 1,
-                "username": "Gustavo",
-                "pwd": "20",
-                "scores": [{
-                        "id": 2,
-                        "score": 5,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 3,
-                        "score": 10,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 4,
-                        "score": 15,
-                        "level": "easy"
-                    }
-                ]
-            },
-            {
-                "id": 2,
-                "username": "Elisa",
-                "pwd": "10",
-                "scores": [{
-                    "id": 5,
-                    "score": 150,
-                    "level": "easy"
-                }]
-            },
-            {
-                "id": 3,
-                "username": "Tati",
-                "pwd": "2",
-                "scores": [{
-                        "id": 5,
-                        "score": 20,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 5,
-                        "score": 2,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 5,
-                        "score": 10,
-                        "level": "easy"
-                    }
-                ]
-            }
-        ]
-        // for (var data in users) {
-        //     console.log(users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === 'easy') })));
-        // }
-
-    $ranking = users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === "easy") }));
-    //repetir usando foreach
-    console.log($ranking);
-    for (var data in $ranking.scores) {
-        $topFive[data] = $ranking.username,
-            console.log($ranking.scores)
-    }
-
-    // console.log(users.map(users => ({ users: users.username, scores: users.scores.filter(scores => scores.level === `${$level}`) })));
-
-    // for (var data in users) {
-    //     $levelEasy[data] = users[data].scores.filter(scores => scores.level == "easy")
-    //     for (var data in $levelEasy) {
-    //         var $rankingEasy = $levelEasy
-    //     }
-    //     console.log(users[data].username, users[data].scores[data].score)
-    // }
-
-
-    // for (var data in users) {
-
-    //     for (var data in users[data].scores) {
-    //         var score = scores[data].score
-    //         return score
-    //     }
-    //     console.log("Nome na posição " + data + ' = ' + ordemD[data].username + ', ' +
-    //         " score: = " + scores[data].score);
-    // }
-
-
 
     fillboard();
+    ranking();
+
     $("#level").prop("disabled", false);
 
     $("#chrono").text($initialTime)
@@ -131,6 +47,122 @@ $(document).ready(function() {
     });
 })
 
+function conection() {
+    $.getJSON("https://localhost:8080/", function(dados) {});
+}
+
+function ranking() {
+    $selectedLevel = select();
+
+    /**
+     * @typedef Score Pontuação de um usuário
+     * @property {number} id ID da pontuação do usuário
+     * @property {number} score Pontuação do usuário
+     * @property {string} level Dificuldade
+     */
+
+    /**
+     * @typedef User
+     * @property {number} id ID do usuário
+     * @property {string} username Nome do usuário
+     * @property {string} pwd ???
+     * @property {Array<Score>} scores Lista de pontuações do usuário
+     */
+
+    /** @type{Array<User>} */
+    const users = [{
+            id: 1,
+            username: "Gustavo",
+            pwd: "20",
+            scores: [{
+                    id: 2,
+                    score: 5,
+                    level: "hard",
+                },
+                {
+                    id: 3,
+                    score: 10,
+                    level: "easy",
+                },
+                {
+                    id: 4,
+                    score: 15,
+                    level: "easy",
+                },
+            ],
+        },
+        {
+            id: 2,
+            username: "Elisa",
+            pwd: "10",
+            scores: [{
+                id: 5,
+                score: 150,
+                level: "easy",
+            }, ],
+        },
+        {
+            id: 3,
+            username: "Tati",
+            pwd: "2",
+            scores: [{
+                    id: 5,
+                    score: 20,
+                    level: "easy",
+                },
+                {
+                    id: 5,
+                    score: 2,
+                    level: "easy",
+                },
+                {
+                    id: 5,
+                    score: 10,
+                    level: "easy",
+                },
+            ],
+        },
+    ];
+
+    const highestToLowestSortingStrategy = (a, b) => b - a;
+
+    /**
+     * Filtra os dados de uma determinada lista de
+     * usuários e ordena suas pontuações através
+     * de uma dificuldade
+     *
+     * @param {Array<User>} users Lista de usuários
+     * @param {string} difficulty Dificuldade utilizada para o filtro da pontuação
+     * @param {(a: any, b: any) => number} sortingStrategy Estratégia de ordenamento de scores
+     * @returns Retorna a lista filtrada de usuários
+     */
+    const filterScoresByDifficulty = (
+            users,
+            $level,
+            sortingStrategy = highestToLowestSortingStrategy
+        ) =>
+        users
+        .map(({ scores, ...user }) =>
+            scores
+            .filter((score) => score.level === $level)
+            .map((score) => ({
+                ...user,
+                ...score,
+            }))
+        )
+        .reduce((list, next) => [...list, ...next], [])
+        .sort((a, b) => sortingStrategy(a.score, b.score));
+
+    const filteredLevelScoresHighestToLowest = filterScoresByDifficulty(
+        users,
+        $selectedLevel
+    );
+    // console.log(filteredLevelScoresHighestToLowest);
+    $ranking = filteredLevelScoresHighestToLowest
+    return $ranking;
+}
+
+//habilita/desabilita os botões
 function btnCtrl(schema) {
     switch (schema) {
         case 1:
@@ -205,7 +237,10 @@ function startChronoGame() {
 }
 
 function endGame() {
-    alertWifi(`Fim de Jogo. Voce gabhou = ${$("#score").text()} abóboras!`, false, 0, "", "50", false, false)
+    // $actualLevel = select();
+    console.log($actualLevel)
+    console.log($ranking)
+    alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
     fillboard();
@@ -246,7 +281,7 @@ function updateScore($img) {
 function startGame() {
     // fillboard()
     $(`#mole_${$molePosition}`).attr("src", `img/${$imgsTheme.default}`);
-    $level = getLevel();
+    // $level = getLevel();
     $randNumber = getRandNumber(1, Math.pow($level, 2));
     $(`#mole_${$randNumber}`).attr("src", `img/${$imgsTheme.active}`);
     $molePosition = $randNumber;
@@ -259,4 +294,8 @@ function getRandNumber(min, max) {
 
 function getLevel() {
     return $levels[$("#level").val()]
+}
+
+function select() {
+    return $actualLevel = $("#level").val();
 }
