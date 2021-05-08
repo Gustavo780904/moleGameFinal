@@ -3,6 +3,7 @@ const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
 const $initialTime = 1;
+const users = $dados;
 
 var $timeGame = $initialTime;
 var $idChronoGame; //setInterval
@@ -13,7 +14,7 @@ var $level = getLevel();
 var $ranking;
 var $topFive = new Array();
 var $actualLevel;
-var $dados;
+var $dados = new Array();
 
 $(document).ready(function() {
 
@@ -48,21 +49,30 @@ $(document).ready(function() {
     });
 })
 
-// function connection() {
 
-json = $.getJSON("http://localhost:8080/user", function() {
-    $dados = json.responseJSON
-        // console.log($dados);
-    return $dados
-});
+$.getJSON("http://localhost:8080/user", json);
 
-// }
-
+function json(json) {
+    // for (data in json) {
+    //     $dados[data] = json[data]
+    //     console.log($dados[data])
+    // }
+    $dados = json
+        // console.log(json)
+        // console.log($dados)
+        // ranking($dados);
+        // return $dados
+}
+// console.log($dados)
 
 function ranking() {
-    $dados = json.responseJSON
-    console.log($dados);
+
+    console.log($dados)
+
+
+    // console.log($dados[0].username);
     $selectedLevel = select();
+    // console.log($selectedLevel);
     /**
      * @typedef Score Pontuação de um usuário
      * @property {number} id ID da pontuação do usuário
@@ -79,198 +89,144 @@ function ranking() {
      */
 
     /** @type{Array<User>} */
-    const users = [{
-                "id": 1,
-                "username": "Gustavo",
-                "pwd": "123",
-                "scores": [{
-                        "id": 7,
-                        "score": 5,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 8,
-                        "score": 3,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 9,
-                        "score": 7,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 10,
-                        "score": 12,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 11,
-                        "score": 16,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 12,
-                        "score": 17,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 24,
-                        "score": 23,
-                        "level": "easy"
-                    }
-                ]
-            },
-            {
-                "id": 2,
-                "username": "Tati",
-                "pwd": "123",
-                "scores": [{
-                        "id": 4,
-                        "score": 8,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 5,
-                        "score": 6,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 6,
-                        "score": 9,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 13,
-                        "score": 9,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 14,
-                        "score": 4,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 15,
-                        "score": 12,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 22,
-                        "score": 14,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 23,
-                        "score": 19,
-                        "level": "easy"
-                    }
-                ]
-            },
-            {
-                "id": 3,
-                "username": "Elisa",
-                "pwd": "123",
-                "scores": [{
-                        "id": 1,
-                        "score": 15,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 2,
-                        "score": 10,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 3,
-                        "score": 8,
-                        "level": "hard"
-                    },
-                    {
-                        "id": 16,
-                        "score": 16,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 17,
-                        "score": 12,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 18,
-                        "score": 8,
-                        "level": "medium"
-                    },
-                    {
-                        "id": 19,
-                        "score": 20,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 20,
-                        "score": 25,
-                        "level": "easy"
-                    },
-                    {
-                        "id": 21,
-                        "score": 26,
-                        "level": "easy"
-                    }
-                ]
-            }
-        ]
+    var users = $dados
+    console.log(users)
         // [{
-        //         id: 1,
-        //         username: "Gustavo",
-        //         pwd: "20",
-        //         scores: [{
-        //                 id: 2,
-        //                 score: 5,
-        //                 level: "hard",
-        //             },
-        //             {
-        //                 id: 3,
-        //                 score: 10,
-        //                 level: "easy",
-        //             },
-        //             {
-        //                 id: 4,
-        //                 score: 15,
-        //                 level: "easy",
-        //             },
-        //         ],
-        //     },
-        //     {
-        //         id: 2,
-        //         username: "Elisa",
-        //         pwd: "10",
-        //         scores: [{
-        //             id: 5,
-        //             score: 150,
-        //             level: "easy",
-        //         }, ],
-        //     },
-        //     {
-        //         id: 3,
-        //         username: "Tati",
-        //         pwd: "2",
-        //         scores: [{
-        //                 id: 5,
-        //                 score: 20,
-        //                 level: "easy",
-        //             },
-        //             {
-        //                 id: 5,
-        //                 score: 2,
-        //                 level: "easy",
-        //             },
-        //             {
-        //                 id: 5,
-        //                 score: 10,
-        //                 level: "easy",
-        //             },
-        //         ],
-        //     },
-        // ];
+        //     "id": 1,
+        //     "username": "Gustavo",
+        //     "pwd": "123",
+        //     "scores": [{
+        //             "id": 7,
+        //             "score": 5,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 8,
+        //             "score": 3,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 9,
+        //             "score": 7,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 10,
+        //             "score": 12,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 11,
+        //             "score": 16,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 12,
+        //             "score": 17,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 24,
+        //             "score": 23,
+        //             "level": "easy"
+        //         }
+        //     ]
+        // }, {
+        //     "id": 2,
+        //     "username": "Tati",
+        //     "pwd": "123",
+        //     "scores": [{
+        //             "id": 4,
+        //             "score": 8,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 5,
+        //             "score": 6,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 6,
+        //             "score": 9,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 13,
+        //             "score": 9,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 14,
+        //             "score": 4,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 15,
+        //             "score": 12,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 22,
+        //             "score": 14,
+        //             "level": "easy"
+        //         },
+        //         {
+        //             "id": 23,
+        //             "score": 19,
+        //             "level": "easy"
+        //         }
+        //     ]
+        // }, {
+        //     "id": 3,
+        //     "username": "Elisa",
+        //     "pwd": "123",
+        //     "scores": [{
+        //             "id": 1,
+        //             "score": 15,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 2,
+        //             "score": 10,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 3,
+        //             "score": 8,
+        //             "level": "hard"
+        //         },
+        //         {
+        //             "id": 16,
+        //             "score": 16,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 17,
+        //             "score": 12,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 18,
+        //             "score": 8,
+        //             "level": "medium"
+        //         },
+        //         {
+        //             "id": 19,
+        //             "score": 20,
+        //             "level": "easy"
+        //         },
+        //         {
+        //             "id": 20,
+        //             "score": 25,
+        //             "level": "easy"
+        //         },
+        //         {
+        //             "id": 21,
+        //             "score": 26,
+        //             "level": "easy"
+        //         }
+        //     ]
+        // }]
 
     const highestToLowestSortingStrategy = (a, b) => b - a;
 
@@ -279,32 +235,14 @@ function ranking() {
      * usuários e ordena suas pontuações através
      * de uma dificuldade
      *
-     * @param {Array<User>} users Lista de usuários
+     * @param {ArrayList<User>} users Lista de usuários
      * @param {string} difficulty Dificuldade utilizada para o filtro da pontuação
      * @param {(a: any, b: any) => number} sortingStrategy Estratégia de ordenamento de scores
      * @returns Retorna a lista filtrada de usuários
      */
-    const filterScoresByDifficulty = (
-            users,
-            $level,
-            sortingStrategy = highestToLowestSortingStrategy
-        ) =>
-        users
-        .map(({ scores, ...user }) =>
-            scores
-            .filter((score) => score.level === $level)
-            .map((score) => ({
-                ...user,
-                ...score,
-            }))
-        )
-        .reduce((list, next) => [...list, ...next], [])
-        .sort((a, b) => sortingStrategy(a.score, b.score));
+    const filterScoresByDifficulty = (users, $level, sortingStrategy = highestToLowestSortingStrategy) => users.map(({ scores, ...user }) => scores.filter((score) => score.level === $level).map((score) => ({...user, ...score, }))).reduce((list, next) => [...list, ...next], []).sort((a, b) => sortingStrategy(a.score, b.score));
 
-    const filteredLevelScoresHighestToLowest = filterScoresByDifficulty(
-        users,
-        $selectedLevel
-    );
+    const filteredLevelScoresHighestToLowest = filterScoresByDifficulty(users, $selectedLevel);
     // console.log(filteredLevelScoresHighestToLowest);
     $ranking = filteredLevelScoresHighestToLowest
     return $ranking;
