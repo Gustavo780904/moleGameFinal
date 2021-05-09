@@ -2,7 +2,7 @@ const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
-const $initialTime = 1;
+const $initialTime = 10;
 var $users = new Array();
 
 var $timeGame = $initialTime;
@@ -53,16 +53,8 @@ $(document).ready(function() {
 $.getJSON("http://localhost:8080/user", json);
 
 function json(json) {
-    // // $users = json
-    // for (data in json) {
-    //     $users[data] = json[data]
-    // }
-    // // console.log($dados)
-    // console.log($users)
     $users = json
     ranking(json)
-        // return $users
-
 }
 
 function ranking() {
@@ -87,7 +79,6 @@ function ranking() {
 
     /** @type{Array<User>} */
     // const users = $dados
-
 
     const highestToLowestSortingStrategy = (a, b) => b - a;
 
