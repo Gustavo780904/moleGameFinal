@@ -65,7 +65,8 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($contentPanel).append($btnPanelInfo);
         $($btnPanelInfo).click(function() {
             closeAlertWifi($panelInfo)
-                //ver como começar o jogo depois de clicar em iniciar!
+            play();
+            //ver como começar o jogo depois de clicar em iniciar!
         });
         //exibe a msg de confirmacao de sair
     } else if (!$hasTimer && $exit && !$start) {

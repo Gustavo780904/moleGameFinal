@@ -37,7 +37,8 @@ $(document).ready(function() {
     console.log($idUser)
     $("#btnPlay").click(function() {
         btnCtrl(1);
-        play();
+        //tem que chamar start
+        start();
     });
 
     $("#btnResume").click(function() {
@@ -57,6 +58,7 @@ $(document).ready(function() {
     $("#btnExit").click(function() {
         exit();
     });
+
 })
 
 //carrega os dados dos usuários
