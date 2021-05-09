@@ -9,6 +9,7 @@ $(document).ready(function() {
                 let $id = $teste[0].id
                 if ($registros.filter($usuario => $usuario.username == $user && $usuario.pwd == $pwd).length > 0) {
                     sessionStorage.setItem('id', $id);
+                    sessionStorage.setItem('username', $user);
                     window.open("index.html", "_self");
                 } else
                     alert("Usuário ou senha incorretos, tente novamente ou cadastre-se!")

@@ -14,17 +14,23 @@ var $level = getLevel();
 var $ranking;
 var $topFive = new Array();
 var $actualLevel;
+var $idUser = iDlogin();
+var $actualUser = username();
 // var $dados = new Array();
 
 $(document).ready(function() {
 
     fillboard();
+    iDlogin();
+    username();
     // ranking();
     //json();
     $("#level").prop("disabled", false);
 
-    $("#chrono").text($initialTime)
-
+    $("#chrono").text($initialTime);
+    $("#usuario").text($actualUser);
+    console.log($actualUser)
+    console.log($idUser)
     $("#btnPlay").click(function() {
         btnCtrl(1);
         play();
@@ -49,7 +55,7 @@ $(document).ready(function() {
     });
 })
 
-
+//carrega os dados dos usuários
 $.getJSON("http://localhost:8080/user", json);
 
 function json(json) {
@@ -177,7 +183,6 @@ function startChronoGame() {
 }
 
 function endGame() {
-    // $actualLevel = select();
     console.log($actualLevel)
     console.log($ranking)
     alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
@@ -238,4 +243,16 @@ function getLevel() {
 
 function select() {
     return $actualLevel = $("#level").val();
+}
+
+function logout() {
+    sessionStorage.removeItem("id")
+}
+
+function iDlogin() {
+    return sessionStorage.getItem("id")
+}
+
+function username() {
+    return sessionStorage.getItem("username");
 }

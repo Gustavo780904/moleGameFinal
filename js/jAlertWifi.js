@@ -74,6 +74,7 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($btnPanelInfoS).click(function() {
             closeAlertWifi($panelInfo);
             window.open("login.html", "_self");
+            logout();
         });
         $btnPanelInfoN = $("<button></button>").text("Não?").addClass("button");
         $($contentPanel).append($btnPanelInfoN);
