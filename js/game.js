@@ -16,6 +16,10 @@ var $topFive = new Array();
 var $actualLevel;
 var $idUser = iDlogin();
 var $actualUser = username();
+var $finalScore = 0;
+var $score;
+
+
 // var $dados = new Array();
 
 $(document).ready(function() {
@@ -167,7 +171,7 @@ function stop() {
     btnCtrl(3);
     $("#score").text("0");
     $timeGame = $initialTime;
-    $scoreBoard = $("#chrono").text($timeGame); //alimenta o ranking
+    $("#chrono").text($timeGame);
 }
 
 function exit() {
@@ -185,14 +189,20 @@ function startChronoGame() {
 function endGame() {
     console.log($actualLevel)
     console.log($ranking)
+        // console.log($finalScore)
     alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
+
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
     fillboard();
     btnCtrl(3);
+    $score = $finalScore;
+    saveScore();
+    $finalScore = 0;
+
     $("#score").text("0");
     $timeGame = $initialTime;
-    $scoreBoard = $("#chrono").text($timeGame); //variavel que alimenta o ranking
+    $("#chrono").text($timeGame);
 }
 
 //cria o tabuleiro(moldura)conforme o nivel
@@ -219,6 +229,7 @@ function placeHolesBoard($level) {
 function updateScore($img) {
     if ($($img).attr("src").search("toupeira") != -1) {
         $("#score").text(parseInt($("#score").text()) + 1);
+        $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
     }
 }
@@ -256,4 +267,9 @@ function iDlogin() {
 
 function username() {
     return sessionStorage.getItem("username");
+}
+
+function saveScore() {
+    let data = { "score": $score, "level": $actualLevel }
+    axios.post("http://localhost:8080/user/" + $idUser + "/score", data);
 }
