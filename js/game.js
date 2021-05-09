@@ -247,6 +247,7 @@ function select() {
 
 function logout() {
     sessionStorage.removeItem("id")
+    sessionStorage.removeItem("username")
 }
 
 function iDlogin() {
