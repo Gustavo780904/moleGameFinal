@@ -5,9 +5,10 @@ $(document).ready(function() {
         if ($user && $pwd) {
             $.getJSON("http://localhost:8080/user", function($registros) {
 
-                let $teste = $registros.filter($usuario => $usuario.username == $user)
-                let $id = $teste[0].id
+
                 if ($registros.filter($usuario => $usuario.username == $user && $usuario.pwd == $pwd).length > 0) {
+                    let $teste = $registros.filter($usuario => $usuario.username == $user)
+                    let $id = $teste[0].id
                     sessionStorage.setItem('id', $id);
                     sessionStorage.setItem('username', $user);
                     window.open("index.html", "_self");

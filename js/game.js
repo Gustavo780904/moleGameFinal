@@ -3,8 +3,12 @@ const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
 const $initialTime = 10;
-var $users = new Array();
 
+// var $tema = new Audio('tema.mp3');
+// var $motoLigada = new Audio('motoLigada.mp3');
+// var $motoLigada = new Audio('motoLigada.mp3');
+// var $motoLigada = new Audio('motoLigada.mp3');
+var $users = new Array();
 var $timeGame = $initialTime;
 var $idChronoGame; //setInterval
 var $idChronoStartGame; //startgame
@@ -23,7 +27,14 @@ var $score;
 // var $dados = new Array();
 
 $(document).ready(function() {
+    $.getJSON("http://localhost:8080/user", json);
 
+    function json(json) {
+        $users = json
+        ranking(json)
+    }
+    // $tema.play();
+    // $motoLigada.play();
     fillboard();
     iDlogin();
     username();
@@ -58,16 +69,16 @@ $(document).ready(function() {
     $("#btnExit").click(function() {
         exit();
     });
+    $("main").mousedown(function(e) {
+        e.preventDefault();
+        $(this).blur();
+        return false;
+    });
 
 })
 
 //carrega os dados dos usuários
-$.getJSON("http://localhost:8080/user", json);
 
-function json(json) {
-    $users = json
-    ranking(json)
-}
 
 function ranking() {
     // $users = json;
@@ -146,6 +157,7 @@ function start() {
 }
 
 function play() {
+    ranking()
     $('#chrono').toggleClass('chrono');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
@@ -189,17 +201,20 @@ function startChronoGame() {
 }
 
 function endGame() {
+    ranking();
     console.log($actualLevel)
     console.log($ranking)
-        // console.log($finalScore)
+    $score = $finalScore;
+    saveScore();
+    // console.log($finalScore)
     alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
 
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
     fillboard();
     btnCtrl(3);
-    $score = $finalScore;
-    saveScore();
+
+
     $finalScore = 0;
 
     $("#score").text("0");
