@@ -57,16 +57,19 @@ $(document).ready(function() {
         start();
     });
     $("#btnResume").click(function() {
+        $('#chrono').removeClass('btnPause');
         btnCtrl(1);
         play();
     });
     $('#btnPause').click(function() {
+        $('#chrono').addClass('btnPause');
         btnCtrl(2);
         pause();
     });
     $("#btnStop").click(function() {
         stop();
         btnCtrl(3);
+        $("main").removeClass("ponteiro")
     });
     $("#btnExit").click(function() {
         exit();
@@ -109,11 +112,11 @@ function btnCtrl(schema) {
 }
 //abre o wifi inicial
 function start() {
-    alertWifi(`Seu objetivo é eliminar o maior número de toupeiras, você está pronto?`, false, 0, "", "50", false, true)
+    alertWifi(`Seu objetivo é eliminar o maior número de toupeiras, você está pronto?`, false, 0, "img/serrapainel.png", "40", false, true)
 }
 
 function play() {
-    $('#chrono').toggleClass('chrono');
+
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
     $idChronoGame = setInterval(startChronoGame, 1000);
@@ -121,15 +124,18 @@ function play() {
 
 function resume() {
     play();
+    // $('#chrono').toogleClass('btnResume');
+
 }
 
 function pause() {
-    $('#chrono').toggleClass('btnPause');
 
+
+    // $('#chrono').removeClass('btnResume');
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame)
     $(`#mole_${$molePosition}`).attr("src", `img/${$imgsTheme.default}`);
-    $('#chrono').toggleClass('chrono');
+    // $('#chrono').addClass('chrono');
 }
 
 function stop() {

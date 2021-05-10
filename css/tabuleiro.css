@@ -77,6 +77,13 @@ main {
     justify-content: flex-start;
     align-items: stretch;
     align-content: stretch;
+}
+
+.ponteiro {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
     cursor: url(/img/serra.png), default;
 }
 
@@ -92,3 +99,8 @@ main {
 #chrono.btnPause {
     color: rgba(255, 0, 0, 0.623);
 }
+
+
+/* #chrono.btnResume {
+    color: black;
+} */

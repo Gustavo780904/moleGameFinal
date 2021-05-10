@@ -24,6 +24,11 @@
     padding: 20px;
 }
 
+th {
+    background-color: rgba(255, 68, 0, 0.452);
+    color: black
+}
+
 .tableRanking,
 th,
 tr,

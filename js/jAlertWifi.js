@@ -42,6 +42,7 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
     //msg final ranking
     if (!$hasTimer && !$exit && !$start) {
         $btnPanelInfo = $("<button></button>").text("Voltar").addClass("button");
+        $("main").removeClass("ponteiro")
         $txtInfoLevel = $("<p></p>").html($actualLevel)
         $($txtInfoLevel).css("font-size", `${$fontSize}px`);
         $tableRanking = $(`<table></table>`).addClass("tableRanking container");
@@ -63,6 +64,16 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
     } else if (!$hasTimer && !$exit && $start) {
         $btnPanelInfo = $("<button></button>").text("Iniciar!").addClass("button");
         $($contentPanel).append($btnPanelInfo);
+        $($btnPanelInfo).click(function() {
+            closeAlertWifi($panelInfo);
+            $("main").addClass("ponteiro")
+        });
+        $btnPanelInfoV = $("<button></button>").text("Voltar").addClass("button");
+        $($contentPanel).append($btnPanelInfoV);
+        $($btnPanelInfoV).click(function() {
+            closeAlertWifi($panelInfo);
+            stop();
+        });
         $($btnPanelInfo).click(function() {
             closeAlertWifi($panelInfo)
             play();
@@ -110,3 +121,10 @@ function showChronoAlertWifi($panelInfo, $countTimer) {
     if ($countTimer > 0) setTimeout(showChronoAlertWifi, 1000, $panelInfo, --$countTimer);
     else closeAlertWifi($panelInfo);
 }
+//-----------------------------------------------------------------------------------
+//limpa o ponteiro do cursor
+$("main").mousedown(function(e) {
+    e.preventDefault();
+    $(this).blur();
+    return false;
+});
