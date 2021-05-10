@@ -27,41 +27,43 @@ var $score;
 // var $dados = new Array();
 
 $(document).ready(function() {
+    //baixa o json
     $.getJSON("http://localhost:8080/user", json);
 
+    //
     function json(json) {
         $users = json
-        ranking(json)
+            // ranking(json)
     }
+    //filtra por level e score 
+    // ranking()
     // $tema.play();
     // $motoLigada.play();
     fillboard();
+    //buscam os dados no seesionStore
     iDlogin();
     username();
-    // ranking();
-    //json();
+    //libera o select do level
     $("#level").prop("disabled", false);
-
+    //insere o cronometro e o usuario
     $("#chrono").text($initialTime);
     $("#usuario").text($actualUser);
     console.log($actualUser)
     console.log($idUser)
+        //controle dos botoes
     $("#btnPlay").click(function() {
         btnCtrl(1);
         //tem que chamar start
         start();
     });
-
     $("#btnResume").click(function() {
         btnCtrl(1);
         play();
     });
-
     $('#btnPause').click(function() {
         btnCtrl(2);
         pause();
     });
-
     $("#btnStop").click(function() {
         stop();
         btnCtrl(3);
@@ -69,6 +71,7 @@ $(document).ready(function() {
     $("#btnExit").click(function() {
         exit();
     });
+    //limpa o ponteiro do cursor
     $("main").mousedown(function(e) {
         e.preventDefault();
         $(this).blur();
@@ -77,53 +80,6 @@ $(document).ready(function() {
 
 })
 
-//carrega os dados dos usuários
-
-
-function ranking() {
-    // $users = json;
-    console.log($users);
-    $selectedLevel = select();
-    // console.log($selectedLevel);
-    /**
-     * @typedef Score Pontuação de um usuário
-     * @property {number} id ID da pontuação do usuário
-     * @property {number} score Pontuação do usuário
-     * @property {string} level Dificuldade
-     */
-
-    /**
-     * @typedef User
-     * @property {number} id ID do usuário
-     * @property {string} username Nome do usuário
-     * @property {string} pwd ???
-     * @property {Array<Score>} scores Lista de pontuações do usuário
-     */
-
-    /** @type{Array<User>} */
-    // const users = $dados
-
-    const highestToLowestSortingStrategy = (a, b) => b - a;
-
-    /**
-     * Filtra os dados de uma determinada lista de
-     * usuários e ordena suas pontuações através
-     * de uma dificuldade
-     *
-     * @param {ArrayList<User>} users Lista de usuários
-     * @param {string} difficulty Dificuldade utilizada para o filtro da pontuação
-     * @param {(a: any, b: any) => number} sortingStrategy Estratégia de ordenamento de scores
-     * @returns Retorna a lista filtrada de usuários
-     */
-    const filterScoresByDifficulty = (users, $level, sortingStrategy = highestToLowestSortingStrategy) => users.map(({ scores, ...user }) => scores.filter((score) => score.level === $level).map((score) => ({...user, ...score, }))).reduce((list, next) => [...list, ...next], []).sort((a, b) => sortingStrategy(a.score, b.score));
-
-    const filteredLevelScoresHighestToLowest = filterScoresByDifficulty($users, $selectedLevel);
-
-    $ranking = filteredLevelScoresHighestToLowest
-    console.log($ranking)
-    return $ranking;
-
-}
 
 //habilita/desabilita os botões
 function btnCtrl(schema) {
@@ -151,13 +107,12 @@ function btnCtrl(schema) {
             break;
     }
 }
-
+//abre o wifi inicial
 function start() {
     alertWifi(`Seu objetivo é eliminar o maior número de toupeiras, você está pronto?`, false, 0, "", "50", false, true)
 }
 
 function play() {
-    ranking()
     $('#chrono').toggleClass('chrono');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
@@ -194,32 +149,75 @@ function exit() {
         // window.open("login.html", "_self")
 }
 
-
 function startChronoGame() {
     let $secondsFormat = (--$timeGame).toLocaleString("pt-br", { minimumIntegerDigits: 2 });
     ($timeGame >= 0) ? $("#chrono").text($secondsFormat): endGame();
 }
 
 function endGame() {
-    ranking();
-    console.log($actualLevel)
-    console.log($ranking)
     $score = $finalScore;
-    saveScore();
+    console.log($finalScore)
+    console.log($score)
+        // $users.push({ "score": $score, "level": $actualLevel });
+    ranking($users);
+    // console.log($actualLevel)
+    // console.log($ranking)
+    saveScore($score);
     // console.log($finalScore)
     alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
-
+        //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
     fillboard();
     btnCtrl(3);
-
-
     $finalScore = 0;
 
     $("#score").text("0");
     $timeGame = $initialTime;
     $("#chrono").text($timeGame);
+}
+
+//filtra os dados dos usuários e ordena 
+function ranking() {
+    // $users = json;
+    console.log($users);
+    $selectedLevel = select();
+    console.log($selectedLevel);
+    /**
+     * @typedef Score Pontuação de um usuário
+     * @property {number} id ID da pontuação do usuário
+     * @property {number} score Pontuação do usuário
+     * @property {string} level Dificuldade
+     */
+
+    /**
+     * @typedef User
+     * @property {number} id ID do usuário
+     * @property {string} username Nome do usuário
+     * @property {string} pwd ???
+     * @property {Array<Score>} scores Lista de pontuações do usuário
+     */
+
+    /** @type{Array<User>} */
+    // const users = $dados
+    const highestToLowestSortingStrategy = (a, b) => b - a;
+    /**
+     * Filtra os dados de uma determinada lista de
+     * usuários e ordena suas pontuações através
+     * de uma dificuldade
+     *
+     * @param {ArrayList<User>} users Lista de usuários
+     * @param {string} difficulty Dificuldade utilizada para o filtro da pontuação
+     * @param {(a: any, b: any) => number} sortingStrategy Estratégia de ordenamento de scores
+     * @returns Retorna a lista filtrada de usuários
+     */
+    const filterScoresByDifficulty = (users, $level, sortingStrategy = highestToLowestSortingStrategy) => users.map(({ scores, ...user }) => scores.filter((score) => score.level === $level).map((score) => ({...user, ...score, }))).reduce((list, next) => [...list, ...next], []).sort((a, b) => sortingStrategy(a.score, b.score));
+
+    const filteredLevelScoresHighestToLowest = filterScoresByDifficulty($users, $selectedLevel);
+
+    $ranking = filteredLevelScoresHighestToLowest
+    console.log($ranking)
+    return $ranking;
 }
 
 //cria o tabuleiro(moldura)conforme o nivel
@@ -231,7 +229,7 @@ function fillboard() {
     $("#board").css({ "width": $boardWidth, "height": $boardHeight })
     placeHolesBoard($level)
 }
-//insere os buracos no tabuleiro
+//insere os buracos no tabuleiro e chama updatescore
 function placeHolesBoard($level) {
     $("#board").empty()
     for ($i = 0; $i < Math.pow($level, 2); $i++) {
@@ -248,8 +246,10 @@ function updateScore($img) {
         $("#score").text(parseInt($("#score").text()) + 1);
         $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
+        return $finalScore;
     }
 }
+
 //faz a toupeira sair dos buracos 
 function startGame() {
     // fillboard()
@@ -264,11 +264,11 @@ function startGame() {
 function getRandNumber(min, max) {
     return Math.round((Math.random() * Math.abs(max - min)) + min);
 }
-
+//fornece o nivel em number 
 function getLevel() {
     return $levels[$("#level").val()]
 }
-
+// pega o nivel selecionado
 function select() {
     return $actualLevel = $("#level").val();
 }
