@@ -183,12 +183,15 @@ function ranking() {
     console.log($users);
     $selectedLevel = select();
     console.log($selectedLevel);
-    /**
-     * @typedef Score Pontuação de um usuário
-     * @property {number} id ID da pontuação do usuário
-     * @property {number} score Pontuação do usuário
-     * @property {string} level Dificuldade
-     */
+    $testePegaAtual = $users.find($usuario => $usuario.username == $actualUser)
+    $testePegaAtual.scores.push({ "score": $score, "level": $actualLevel })
+    console.log($testePegaAtual)
+        /**
+         * @typedef Score Pontuação de um usuário
+         * @property {number} id ID da pontuação do usuário
+         * @property {number} score Pontuação do usuário
+         * @property {string} level Dificuldade
+         */
 
     /**
      * @typedef User
