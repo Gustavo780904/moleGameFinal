@@ -35,12 +35,12 @@ tr,
 td {
     text-align: center;
     border: 1px solid orangered;
-    padding: 5px;
-    width: 20%;
+    padding: 10px;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
-    margin-top: 5px;
+    margin-top: 10px;
     color: orangered;
 }
 
@@ -52,11 +52,11 @@ td {
 }
 
 .panelInfo .contentPanel button {
-    font-size: 12px;
-    width: 150px;
+    font-size: 18px;
+    width: 200px;
     padding: 10px;
     font-family: 'Press Start 2P', cursive;
-    margin: 5px;
+    margin: 10px;
     border-radius: 10px;
     cursor: pointer;
     background-color: orangered;

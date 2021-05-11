@@ -23,38 +23,45 @@
 
 <body>
     <header>
-        <nav class="navbar">
-            <div class="">
-                <p>Time: 00:<span id="chrono">00</span></p>
+        <nav class="nav">
+            <div class="col-5 row">
+                <div class="col-3">
+                    <p>Time: 00:<span id="chrono">00</span></p>
+                </div>
+                <div class="col-6">
+                    <p>User: <span id="usuario"></span></p>
+                </div>
+                <div class="col-3">
+                    <p>Score: <span id="score">0</span></p>
+                </div>
             </div>
-            <div class="">
-                <p>User: <span id="usuario"></span></p>
-            </div>
-            <div class="">
-                <p>Score: <span id="score">0</span></p>
-            </div>
-            <div class="">
+
+
+            <div class="col-2">
                 <h1>Mole Game</h1>
             </div>
-            <div class="">
-                <!-- <button class="btn btn-link desliga" onclick="stopAudio()"> <span class="material-icons">
-                    volume_off
-                    </span>
-                </button> -->
 
-                <label for="level">Level</label>
-                <select class="alert-dark" name="level" id="level" disabled>
-            <option value="easy" >Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-            </select>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-success" id="btnPlay">Play</button>
-                <button class="btn btn-sm btn-success" id="btnResume" disabled>Resume</button>
-                <button class="btn btn-sm btn-success" id="btnPause" disabled>Pause</button>
-                <button class="btn btn-sm btn-success" id="btnStop" disabled>Stop</button>
-                <button class="btn btn-sm btn-danger" id="btnExit">Exit</button>
+
+            <div class="col-5 navbar">
+                <div class="mudo col-1">
+                    <i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>
+                </div>
+                <div class="col-4">
+                    <label for="level">Level</label>
+                    <select class="alert-dark" name="level" id="level" disabled>
+                        <option value="easy" >Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="col-7 navbar">
+                    <button class="btn btn-sm btn-success" id="btnPlay">Play</button>
+                    <button class="btn btn-sm btn-success" id="btnResume" disabled>Resume</button>
+                    <button class="btn btn-sm btn-success" id="btnPause" disabled>Pause</button>
+                    <button class="btn btn-sm btn-success" id="btnStop" disabled>Stop</button>
+                    <button class="btn btn-sm btn-danger" id="btnExit">Exit</button>
+                </div>
             </div>
         </nav>
 
@@ -62,8 +69,6 @@
     <main>
         <audio autoplay loop class="tema"> 
             <source class="tema" id="tema" src="/audio/tema.mp3" type="audio/mp3">
-            <!-- <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/ogg"> -->
-            <!-- <source class="" id="ligada" src="/audio/motoLigada.mp3" type="audio/ogg"> -->
          </audio>
         <audio class="motoAcionada"> 
             <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/mp3">

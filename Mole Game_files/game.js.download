@@ -2,7 +2,7 @@ const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buracoM.gif", "active": "toupeiraMarrom.gif", "dead": "morreu.gif" }
-const $initialTime = 5;
+const $initialTime = 20;
 
 // var $users = new Array();
 var $timeGame = $initialTime;
@@ -36,8 +36,7 @@ $(document).ready(function() {
     $("#usuario").text($actualUser);
     console.log($actualUser)
     console.log($idUser)
-
-    //controle dos botoes
+        //controle dos botoes
     $("#btnPlay").click(function() {
         if ($idUser && $actualUser) {
             btnCtrl(1);
@@ -96,7 +95,7 @@ function btnCtrl(schema) {
 }
 //abre o wifi inicial
 function start() {
-    alertWifi(`As toupeiras estão devastando a plantação de abóboras. Para garantir o halloween, seu objetivo é eliminar o maior número delas, você está preparado?`, false, 0, "img/serrapainel.png", "30", false, true)
+    alertWifi(`Seu objetivo é eliminar o maior número de toupeiras, você está pronto?`, false, 0, "img/serrapainel.png", "40", false, true)
 }
 
 function play() {
@@ -144,13 +143,12 @@ function stop() {
 
 function exit() {
     pause();
-    alertWifi(`Deseja realmente sair do jogo?`, false, 0, "img/fim.jpg", "50", true)
+    alertWifi(`Deseja realmente sair do jogo?`, false, 0, "", "50", true)
         // window.open("login.html", "_self")
 }
 
 function startChronoGame() {
     let $secondsFormat = (--$timeGame).toLocaleString("pt-br", { minimumIntegerDigits: 2 });
-    // if ($timeGame >= 5) $("#chrono").toogleClass("piscaChrono");
     ($timeGame >= 0) ? $("#chrono").text($secondsFormat): endGame();
 }
 
@@ -164,7 +162,7 @@ function endGame() {
     // console.log($ranking)
     saveScore($score);
     // console.log($finalScore)
-    alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "img/halow.jpg", "30", false, false, `Level: ${$actualLevel}`, $ranking)
+    alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "", "40", false, false, `Level: ${$actualLevel}`, $ranking)
         //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
@@ -240,7 +238,10 @@ function placeHolesBoard($level) {
     for ($i = 0; $i < Math.pow($level, 2); $i++) {
         $div = $("<div></div>"); //.attr("id", `mole_${$i+1}`);
         $img = $("<img>").attr({ "src": `img/${$imgsTheme.default}`, "id": `mole_${$i+1}` });
-        $($img).click(function() { //treme aqui
+        $($img).click(function() {
+
+            $("h1").addClass("treme")
+            setTimeout(function() { $("h1").removeClass("treme") }, 500);
             updateScore(this)
         });
         $($div).append($img);
@@ -250,15 +251,13 @@ function placeHolesBoard($level) {
 //acrescenta 1 ponto no placar e mostra a toupeira vermelha quando acerta.
 function updateScore($img) {
     if ($($img).attr("src").search("toupeira") != -1) {
-        // stopAudio();
+        stopAudio();
         $(".motoAcionada").trigger('pause');
         $(".motoAcionada").trigger('play');
         $(".motoAcionada").prop("currentTime", 0);
         $("#score").text(parseInt($("#score").text()) + 1);
         $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
-        $("h1").addClass("treme")
-        setTimeout(function() { $("h1").removeClass("treme") }, 500);
         return $finalScore;
     }
 }
@@ -305,15 +304,8 @@ function saveScore() {
 }
 
 function stopAudio() {
-    $(".mudo").html('<i class="mute" onclick="mute()"> <span class="material-icons"> volume_off</span></i>')
-        //pause playing
-    $(".tema").trigger('pause');
+    //pause playing
+    $(".motoAcionada").trigger('pause');
     //set play time to 0
-    // $(".tema").prop("currentTime", 0);
-}
-
-function mute() {
-    $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
-        //pause playing
-    $(".tema").trigger('play');
+    $(".motoAcionada").prop("currentTime", 0);
 }
