@@ -206,12 +206,12 @@ function endGame() {
         //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
-    $(".tema").trigger('play');
+
     fillboard();
     btnCtrl(3);
     $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
     $finalScore = 0;
-
+    $(".tema").trigger('play');
     $("#score").text("0");
     $timeGame = $initialTime;
     $("#chrono").text($timeGame);

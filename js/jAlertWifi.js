@@ -72,7 +72,7 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($contentPanel).append($btnPanelInfoV);
         $($btnPanelInfoV).click(function() {
             closeAlertWifi($panelInfo);
-            stop();
+            // stop();
         });
         $($btnPanelInfo).click(function() {
             closeAlertWifi($panelInfo)
