@@ -187,10 +187,10 @@ function startChronoGame() {
     //     endGame();
 }
 
-function piscaChrono(piscaChrono) {
-    if (piscaChrono <= 5)
-        $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
-}
+// function piscaChrono(piscaChrono) {
+//     if (piscaChrono <= 5)
+//         $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
+// }
 
 function endGame() {
     $score = $finalScore;
@@ -209,6 +209,7 @@ function endGame() {
     $(".tema").trigger('play');
     fillboard();
     btnCtrl(3);
+    $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
     $finalScore = 0;
 
     $("#score").text("0");
