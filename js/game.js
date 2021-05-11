@@ -187,10 +187,6 @@ function startChronoGame() {
     //     endGame();
 }
 
-// function piscaChrono(piscaChrono) {
-//     if (piscaChrono <= 5)
-//         $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
-// }
 
 function endGame() {
     $score = $finalScore;
@@ -206,12 +202,12 @@ function endGame() {
         //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
-
+    mute()
     fillboard();
     btnCtrl(3);
-    $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
+    // $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
     $finalScore = 0;
-    $(".tema").trigger('play');
+    // $(".tema").trigger('play');
     $("#score").text("0");
     $timeGame = $initialTime;
     $("#chrono").text($timeGame);
@@ -294,11 +290,9 @@ function updateScore($img) {
         $(".motoAcionada").trigger('play');
         $(".motoAcionada").prop("currentTime", 0);
         $("#score").text(parseInt($("#score").text()) + 1);
-        $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
         $("h1").addClass("treme")
         setTimeout(function() { $("h1").removeClass("treme") }, 500);
-        return $finalScore;
     }
 }
 
