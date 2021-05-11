@@ -108,6 +108,11 @@ main {
     color: rgba(255, 0, 0, 0.623);
 }
 
+#chrono,
+#score {
+    font-size: 30px;
+}
+
 .desliga {
     color: black;
 }

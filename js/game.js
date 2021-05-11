@@ -114,8 +114,8 @@ function play() {
 
     fillboard();
     $(".motoLigada").trigger('play');
-    setTimeout(function() { $(".tema").trigger('pause'); }, 1000);
-
+    setTimeout(function() { $("h1").removeClass("treme") }, 500);
+    $(".tema").trigger('pause');
     $('#chrono').removeClass('btnPause');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
@@ -315,21 +315,9 @@ function saveScore() {
     axios.post("http://localhost:8080/user/" + $idUser + "/score", data);
 }
 
-// function stopAudio() {
-//     $(".material-icons").html('<span class = "material-icons"> volume_up </span>')
-//     $(".tema").trigger('pause');
-//     $("#desliga").attr('onclick:', 'playAudio()')
-//         // $('#desliga').toogleClass('#desliga')
-//         // $('#liga').toogleClass('desliga')
-// }
-
-// function playAudio() {
-//     console.log("ok")
-// $(".tema").trigger('play');
-// }
-// $("#liga").click(function() {
-//     $(".material-icons").html('<span class="material-icons">volume_off</span>')
-//     $(".tema").trigger('play')
-//     $('#liga').toogleClass('desliga', 'liga')
-//         // $('#liga').toogleClass('liga')
-// })
+function stopAudio() {
+    //pause playing
+    $(".motoAcionada").trigger('pause');
+    //set play time to 0
+    $(".motoAcionada").prop("currentTime", 0);
+}
