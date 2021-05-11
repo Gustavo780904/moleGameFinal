@@ -18,7 +18,7 @@ var $idUser = iDlogin();
 var $actualUser = username();
 var $finalScore = 0;
 var $score;
-var $piscaChrono = 0;
+// var $piscaChrono = 0;
 $(document).ready(function() {
 
     $.getJSON("http://localhost:8080/user", json);
@@ -87,7 +87,7 @@ $(document).ready(function() {
         $(this).blur();
         return false;
     });
-    piscaChrono();
+    // piscaChrono();
 
 })
 
@@ -178,7 +178,7 @@ function exit() {
 function startChronoGame() {
     let $secondsFormat = (--$timeGame).toLocaleString("pt-br", { minimumIntegerDigits: 2 });
     ($timeGame >= 0) ? $("#chrono").text($secondsFormat): endGame();
-    return $piscaChrono += $piscaChrono;
+    // return $piscaChrono += $piscaChrono;
     // if ($timeGame >= 0) {
     //     $("#chrono").text($secondsFormat)
     //     if ($timeGame <= 5)
