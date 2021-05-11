@@ -85,6 +85,7 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($btnPanelInfoS).click(function() {
             closeAlertWifi($panelInfo);
             window.open("index.html", "_self");
+            $(".tema").trigger('pause');
             logout();
         });
         $btnPanelInfoN = $("<button></button>").text("Não?").addClass("button");

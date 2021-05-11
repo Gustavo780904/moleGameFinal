@@ -114,6 +114,8 @@ function play() {
 
     fillboard();
     $(".motoLigada").trigger('play');
+    setTimeout(function() { $(".tema").trigger('pause'); }, 1000);
+
     $('#chrono').removeClass('btnPause');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
@@ -128,6 +130,7 @@ function resume() {
 
 function pause() {
     $(".motoLigada").trigger('pause');
+    $(".tema").trigger('play');
     $('#chrono').addClass('btnPause');
     // $('#chrono').removeClass('btnResume');
     clearInterval($idChronoGame);
@@ -175,6 +178,7 @@ function endGame() {
         //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
+    $(".tema").trigger('play');
     fillboard();
     btnCtrl(3);
     $finalScore = 0;
@@ -247,7 +251,6 @@ function placeHolesBoard($level) {
         $div = $("<div></div>"); //.attr("id", `mole_${$i+1}`);
         $img = $("<img>").attr({ "src": `img/${$imgsTheme.default}`, "id": `mole_${$i+1}` });
         $($img).click(function() {
-            // $(".motoAcionada").prop("currentTime", 0);
 
             $("h1").addClass("treme")
             setTimeout(function() { $("h1").removeClass("treme") }, 500);
@@ -260,7 +263,10 @@ function placeHolesBoard($level) {
 //acrescenta 1 ponto no placar e mostra a toupeira vermelha quando acerta.
 function updateScore($img) {
     if ($($img).attr("src").search("toupeira") != -1) {
+        stopAudio();
+        $(".motoAcionada").trigger('pause');
         $(".motoAcionada").trigger('play');
+        $(".motoAcionada").prop("currentTime", 0);
         $("#score").text(parseInt($("#score").text()) + 1);
         $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
@@ -308,3 +314,22 @@ function saveScore() {
     let data = { "score": $score, "level": $actualLevel }
     axios.post("http://localhost:8080/user/" + $idUser + "/score", data);
 }
+
+// function stopAudio() {
+//     $(".material-icons").html('<span class = "material-icons"> volume_up </span>')
+//     $(".tema").trigger('pause');
+//     $("#desliga").attr('onclick:', 'playAudio()')
+//         // $('#desliga').toogleClass('#desliga')
+//         // $('#liga').toogleClass('desliga')
+// }
+
+// function playAudio() {
+//     console.log("ok")
+// $(".tema").trigger('play');
+// }
+// $("#liga").click(function() {
+//     $(".material-icons").html('<span class="material-icons">volume_off</span>')
+//     $(".tema").trigger('play')
+//     $('#liga').toogleClass('desliga', 'liga')
+//         // $('#liga').toogleClass('liga')
+// })
