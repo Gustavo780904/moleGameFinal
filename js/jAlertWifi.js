@@ -25,7 +25,7 @@
 
 function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $start, $actualLevel, $ranking) {
     let $panelInfo = $(`<div></div>`).addClass("panelInfo");
-    let $contentPanel = $(`<div></div>`).addClass("contentPanel");
+    let $contentPanel = $(`<div"></div>`).addClass("contentPanel");
     $($panelInfo).append($contentPanel);
 
     // Adiciona uma imagem ao painel de informações
@@ -77,7 +77,6 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($btnPanelInfo).click(function() {
             closeAlertWifi($panelInfo)
             play();
-            //ver como começar o jogo depois de clicar em iniciar!
         });
         //exibe a msg de confirmacao de sair
     } else if (!$hasTimer && $exit && !$start) {
@@ -85,7 +84,7 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($contentPanel).append($btnPanelInfoS);
         $($btnPanelInfoS).click(function() {
             closeAlertWifi($panelInfo);
-            window.open("login.html", "_self");
+            window.open("index.html", "_self");
             logout();
         });
         $btnPanelInfoN = $("<button></button>").text("Não?").addClass("button");
@@ -123,7 +122,7 @@ function showChronoAlertWifi($panelInfo, $countTimer) {
 }
 //-----------------------------------------------------------------------------------
 //limpa o ponteiro do cursor
-$("main").mousedown(function(e) {
+$("#teste").mousedown(function(e) {
     e.preventDefault();
     $(this).blur();
     return false;

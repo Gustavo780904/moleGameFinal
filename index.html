@@ -20,14 +20,14 @@
     <script src="js/game.js"></script>
 </head>
 
-<body class="">
+<body>
     <header>
         <nav class="navbar">
             <div class="">
                 <p>Time: 00:<span id="chrono">00</span></p>
             </div>
             <div class="">
-                <p>User: <span id="usuario">Gustavo</span></p>
+                <p>User: <span id="usuario"></span></p>
             </div>
             <div class="">
                 <p>Score: <span id="score">0</span></p>
@@ -37,11 +37,13 @@
             </div>
             <div class="">
                 <label for="level">Level</label>
-                <select class="alert-dark" name="level" id="level" disabled onchange="fillboard()">
+                <select class="alert-dark" name="level" id="level" disabled>
             <option value="easy" >Easy</option>
-            <option value="medium"selected>Medium</option>
+            <option value="medium" selected>Medium</option>
             <option value="hard">Hard</option>
             </select>
+            </div>
+            <div>
                 <button class="btn btn-sm btn-success" id="btnPlay">Play</button>
                 <button class="btn btn-sm btn-success" id="btnResume" disabled>Resume</button>
                 <button class="btn btn-sm btn-success" id="btnPause" disabled>Pause</button>
@@ -52,24 +54,25 @@
 
     </header>
     <main>
-        <!-- <audio autoplay loop class="audio"> 
-            <source class="" id="tema" src="/audio/tema.mp3" type="audio/mp3">
-            <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/ogg">
-            <source class="" id="ligada" src="/audio/motoLigada.mp3" type="audio/ogg">
+        <audio loop class="tema"> 
+            <source class="tema" id="tema" src="/audio/tema.mp3" type="audio/mp3">
+            <!-- <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/ogg"> -->
+            <!-- <source class="" id="ligada" src="/audio/motoLigada.mp3" type="audio/ogg"> -->
          </audio>
-        <audio autoplay class="audio"> 
-            <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/ogg">
+        <audio class="motoAcionada"> 
+            <source class="" id="aciona" src="/audio/motoAcionada.mp3" type="audio/mp3">
         </audio>
-        <audio autoplay loop class="audio"> 
-            <source class="" id="ligada" src="/audio/motoLigada.mp3" type="audio/ogg">
-        </audio> -->
+        <audio class="motoLigada"> 
+            <source class="" id="ligada" src="/audio/motoLigada.mp3" type="audio/mp3">
+        </audio>
+
         <section>
-            <div class="col-4"><img id="abb" src="/img/pngwing.com.png" alt=""></div>
+            <!-- <div class="col-4"><img id="abb" src="/img/pngwing.com.png" alt=""></div> -->
             <div>
                 <div id="board"></div>
 
             </div>
-            <div class="col-4"> <img id="abbc" src="/img/pngwinginvertida.com.png" alt=""></div>
+            <!-- <div class="col-4"> <img id="abbc" src="/img/pngwinginvertida.com.png" alt=""></div> -->
 
         </section>
     </main>

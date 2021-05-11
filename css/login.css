@@ -6,11 +6,22 @@
 }
 
 body {
-    background-color: green;
+    background-image: url(/img/canteiroAboboras.jpg);
+    /* background-repeat: space; */
+    /* background-repeat: no-repeat; */
+    background-position: top;
+    /* background-clip: border-box; */
+    background-size: cover;
+    /* width: 100%; */
 }
 
 h1 {
+    font-size: 45px;
+    font-weight: bold;
     text-align: center;
+    color: rgb(255, 115, 0);
+    /* padding: 20px; */
+    text-shadow: -2px -2px rgba(48, 173, 32, 0.692), 2px 2px #333;
 }
 
 fieldset {

@@ -1,8 +1,8 @@
 const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
-const $imgsTheme = { "default": "buraco.gif", "active": "toupeira.gif", "dead": "morreu.gif" }
-const $initialTime = 10;
+const $imgsTheme = { "default": "buracoM.gif", "active": "toupeiraMarrom.gif", "dead": "morreu.gif" }
+const $initialTime = 20;
 
 // var $tema = new Audio('tema.mp3');
 // var $motoLigada = new Audio('motoLigada.mp3');
@@ -27,19 +27,14 @@ var $score;
 // var $dados = new Array();
 
 $(document).ready(function() {
+
     //baixa o json
     $.getJSON("http://localhost:8080/user", json);
 
-    //
     function json(json) {
         $users = json
-            // ranking(json)
     }
-    //filtra por level e score 
-    // ranking()
-    // $tema.play();
-    // $motoLigada.play();
-    fillboard();
+
     //buscam os dados no seesionStore
     iDlogin();
     username();
@@ -52,24 +47,24 @@ $(document).ready(function() {
     console.log($idUser)
         //controle dos botoes
     $("#btnPlay").click(function() {
-        btnCtrl(1);
-        //tem que chamar start
-        start();
+        if ($idUser && $actualUser) {
+            btnCtrl(1);
+            start();
+        } else
+            window.open("login.html", "_self")
+
     });
     $("#btnResume").click(function() {
-        $('#chrono').removeClass('btnPause');
         btnCtrl(1);
         play();
     });
     $('#btnPause').click(function() {
-        $('#chrono').addClass('btnPause');
         btnCtrl(2);
         pause();
     });
     $("#btnStop").click(function() {
         stop();
         btnCtrl(3);
-        $("main").removeClass("ponteiro")
     });
     $("#btnExit").click(function() {
         exit();
@@ -117,25 +112,28 @@ function start() {
 
 function play() {
 
+    fillboard();
+    $(".motoLigada").trigger('play');
+    $('#chrono').removeClass('btnPause');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
     $idChronoGame = setInterval(startChronoGame, 1000);
+
 }
 
 function resume() {
     play();
     // $('#chrono').toogleClass('btnResume');
-
 }
 
 function pause() {
-
-
+    $(".motoLigada").trigger('pause');
+    $('#chrono').addClass('btnPause');
     // $('#chrono').removeClass('btnResume');
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame)
     $(`#mole_${$molePosition}`).attr("src", `img/${$imgsTheme.default}`);
-    // $('#chrono').addClass('chrono');
+    // $(".motoLigada").trigger('pause');
 }
 
 function stop() {
@@ -146,7 +144,10 @@ function stop() {
     btnCtrl(3);
     $("#score").text("0");
     $timeGame = $initialTime;
+    $("main").removeClass("ponteiro")
     $("#chrono").text($timeGame);
+    $(".motoLigada").trigger('pause');
+    $("#board").css({ "width": $boardWidth, "height": $boardHeight, opacity: 0 })
 }
 
 function exit() {
@@ -181,6 +182,7 @@ function endGame() {
     $("#score").text("0");
     $timeGame = $initialTime;
     $("#chrono").text($timeGame);
+    $("#board").css({ "width": $boardWidth, "height": $boardHeight, opacity: 0 })
 }
 
 //filtra os dados dos usuários e ordena 
@@ -235,7 +237,7 @@ function fillboard() {
     $level = getLevel();
     $boardWidth = $imgWidth * $level
     $boardHeight = $imgHeight * $level
-    $("#board").css({ "width": $boardWidth, "height": $boardHeight })
+    $("#board").css({ "width": $boardWidth, "height": $boardHeight, opacity: 1 })
     placeHolesBoard($level)
 }
 //insere os buracos no tabuleiro e chama updatescore
@@ -244,7 +246,13 @@ function placeHolesBoard($level) {
     for ($i = 0; $i < Math.pow($level, 2); $i++) {
         $div = $("<div></div>"); //.attr("id", `mole_${$i+1}`);
         $img = $("<img>").attr({ "src": `img/${$imgsTheme.default}`, "id": `mole_${$i+1}` });
-        $($img).click(function() { updateScore(this) });
+        $($img).click(function() {
+            // $(".motoAcionada").prop("currentTime", 0);
+
+            $("h1").addClass("treme")
+            setTimeout(function() { $("h1").removeClass("treme") }, 500);
+            updateScore(this)
+        });
         $($div).append($img);
         $("#board").append($div);
     }
@@ -252,6 +260,7 @@ function placeHolesBoard($level) {
 //acrescenta 1 ponto no placar e mostra a toupeira vermelha quando acerta.
 function updateScore($img) {
     if ($($img).attr("src").search("toupeira") != -1) {
+        $(".motoAcionada").trigger('play');
         $("#score").text(parseInt($("#score").text()) + 1);
         $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
