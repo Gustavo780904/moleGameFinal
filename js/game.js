@@ -61,11 +61,34 @@ $(document).ready(function() {
         exit();
     });
     //limpa o ponteiro do cursor
+
     $("main").mousedown(function(e) {
         e.preventDefault();
         $(this).blur();
         return false;
     });
+    $(".a").mousedown(function(e) {
+        e.preventDefault();
+        $(this).blur();
+        return false;
+    });
+    $(".b").mousedown(function(e) {
+        e.preventDefault();
+        $(this).blur();
+        return false;
+    });
+    $(".c").mousedown(function(e) {
+        e.preventDefault();
+        $(this).blur();
+        return false;
+    });
+    $(".d").mousedown(function(e) {
+        e.preventDefault();
+        $(this).blur();
+        return false;
+    });
+
+
 })
 
 //habilita/desabilita os botões
