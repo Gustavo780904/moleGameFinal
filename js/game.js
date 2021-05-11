@@ -2,7 +2,7 @@ const $levels = { "easy": 3, "medium": 5, "hard": 7 }
 const $imgWidth = 100
 const $imgHeight = 80
 const $imgsTheme = { "default": "buracoM.gif", "active": "toupeiraMarrom.gif", "dead": "morreu.gif" }
-const $initialTime = 5;
+const $initialTime = 20;
 
 // var $users = new Array();
 var $timeGame = $initialTime;
@@ -18,7 +18,7 @@ var $idUser = iDlogin();
 var $actualUser = username();
 var $finalScore = 0;
 var $score;
-
+var $piscaChrono = 0;
 $(document).ready(function() {
 
     $.getJSON("http://localhost:8080/user", json);
@@ -87,7 +87,7 @@ $(document).ready(function() {
         $(this).blur();
         return false;
     });
-
+    piscaChrono();
 
 })
 
@@ -127,12 +127,11 @@ function play() {
     fillboard();
     $(".motoLigada").trigger('play');
     setTimeout(function() { $("h1").removeClass("treme") }, 500);
-    $(".tema").trigger('pause');
+    // $(".tema").trigger('pause');
     $('#chrono').removeClass('btnPause');
     $idChronoStartGame = setInterval(startGame, 1180);
     // a cada um segundo aciona startChronoGame e decrementa segundo.
     $idChronoGame = setInterval(startChronoGame, 1000);
-
 }
 
 function resume() {
@@ -142,7 +141,7 @@ function resume() {
 
 function pause() {
     $(".motoLigada").trigger('pause');
-    $(".tema").trigger('play');
+    // $(".tema").trigger('play');
     $('#chrono').addClass('btnPause');
     // $('#chrono').removeClass('btnResume');
     clearInterval($idChronoGame);
@@ -171,10 +170,26 @@ function exit() {
         // window.open("login.html", "_self")
 }
 
+// function piscaChrono(piscaChrono) {
+//     if (piscaChrono <= 5)
+//         $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
+// }
+
 function startChronoGame() {
     let $secondsFormat = (--$timeGame).toLocaleString("pt-br", { minimumIntegerDigits: 2 });
-    // if ($timeGame >= 5) $("#chrono").toogleClass("piscaChrono");
     ($timeGame >= 0) ? $("#chrono").text($secondsFormat): endGame();
+    return $piscaChrono += $piscaChrono;
+    // if ($timeGame >= 0) {
+    //     $("#chrono").text($secondsFormat)
+    //     if ($timeGame <= 5)
+    //         $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
+    // } else
+    //     endGame();
+}
+
+function piscaChrono(piscaChrono) {
+    if (piscaChrono <= 5)
+        $(".pisca").html('<p>Time: 00:<span class="" id="chrono piscaChrono">00</span></p>')
 }
 
 function endGame() {
