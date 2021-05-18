@@ -19,6 +19,7 @@
 // - $exit: *true chamada na função exit();
 // - $start: *true chamada na função start();
 // - $actualLevel: informa o nivel da atual partida para a lista do hanking
+
 // Exemplos:
 //  showPanelInfo("",true,3,"","100"): exibe o painel de informacoes com o texto inicialmente em 3 até chegar 0 e depois o painel desaparece
 //  showPanelInfo("Fim de jogo",false,0,"img/imagem.gif","200"): exibe o painel com a msg "Fim de jogo" com um btn para fechar a janela
@@ -52,10 +53,21 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $exit, $sta
         $($contentPanel).append($tableRanking);
         $($tableRanking).append($headerTable);
         $tableLine = new Array();
-        $ranking = $ranking.slice(0, 5);
-        for (i = 0; i < $ranking.length; i++) {
-            $tableLine[i] = $(`<tr><td>${$ranking[i].username}</td><td>${$ranking[i].score}</td></tr>`)
+        // $ranking =
+        console.log($ranking);
+        var $listaScore = new Array();;
 
+        for (data in $ranking) {
+            if (!($listaScore.some(score => score.username == $ranking[data].username && score.score == $ranking[data].score)))
+                $listaScore.push({ "username": $ranking[data].username, "score": $ranking[data].score });
+        }
+        console.log($listaScore);
+
+        $listaScore = $listaScore.slice(0, 5);
+
+        for (i = 0; i < $listaScore.length; i++) {
+            if ($listaScore[i].score > 0)
+                $tableLine[i] = $(`<tr><td>${$listaScore[i].username}</td><td>${$listaScore[i].score}</td></tr>`)
         }
         $($tableRanking).append($tableLine);
         $($btnPanelInfo).click(function() { closeAlertWifi($panelInfo) });

@@ -32,7 +32,6 @@ $(document).ready(function() {
             });
         } else {
             alert("As senhas devem ser iguais");
-
         }
     });
 });

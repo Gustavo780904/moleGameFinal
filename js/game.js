@@ -36,8 +36,10 @@ $(document).ready(function() {
     $("#usuario").text($actualUser);
     console.log($actualUser)
     console.log($idUser)
-
-    //controle dos botoes
+        // $('#cabe').textfill({
+        //     maxFontPixels: 5
+        // });
+        //controle dos botoes
     $("#btnPlay").click(function() {
         if ($idUser && $actualUser) {
             btnCtrl(1);
@@ -87,6 +89,7 @@ $(document).ready(function() {
         $(this).blur();
         return false;
     });
+
     // piscaChrono();
 
 })
@@ -198,11 +201,12 @@ function endGame() {
     // console.log($ranking)
     saveScore($score);
     // console.log($finalScore)
-    alertWifi(`Fim de Jogo. Voce ganhou ${$("#score").text()} abóboras!`, false, 0, "img/halow.jpg", "30", false, false, `Level: ${$actualLevel}`, $ranking)
+    alertWifi(`Fim de Jogo. Voce ganhou <span class="placar">${$("#score").text()}</span> abóboras!`, false, 0, "img/trofeu.png", "30", false, false, `Level: ${$actualLevel}`, $ranking)
         //reseta o jogo
     clearInterval($idChronoGame);
     clearInterval($idChronoStartGame);
-    mute()
+    playAudio();
+
     fillboard();
     btnCtrl(3);
     // $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
@@ -223,12 +227,13 @@ function ranking() {
     $testePegaAtual = $users.find($usuario => $usuario.username == $actualUser)
     $testePegaAtual.scores.push({ "score": $score, "level": $actualLevel })
     console.log($testePegaAtual)
-        /**
-         * @typedef Score Pontuação de um usuário
-         * @property {number} id ID da pontuação do usuário
-         * @property {number} score Pontuação do usuário
-         * @property {string} level Dificuldade
-         */
+
+    /**
+     * @typedef Score Pontuação de um usuário
+     * @property {number} id ID da pontuação do usuário
+     * @property {number} score Pontuação do usuário
+     * @property {string} level Dificuldade
+     */
 
     /**
      * @typedef User
@@ -251,7 +256,7 @@ function ranking() {
      * @param {(a: any, b: any) => number} sortingStrategy Estratégia de ordenamento de scores
      * @returns Retorna a lista filtrada de usuários
      */
-    const filterScoresByDifficulty = (users, $level, sortingStrategy = highestToLowestSortingStrategy) => users.map(({ scores, ...user }) => scores.filter((score) => score.level === $level).map((score) => ({...user, ...score, }))).reduce((list, next) => [...list, ...next], []).sort((a, b) => sortingStrategy(a.score, b.score));
+    const filterScoresByDifficulty = (users, $level, sortingStrategy = highestToLowestSortingStrategy) => users.map(({ scores, ...user }) => scores.filter((score) => score.level === $level).map((score) => ({...user, ...score }))).reduce((list, next) => [...list, ...next], []).sort((a, b) => sortingStrategy(a.score, b.score));
 
     const filteredLevelScoresHighestToLowest = filterScoresByDifficulty($users, $selectedLevel);
 
@@ -290,9 +295,11 @@ function updateScore($img) {
         $(".motoAcionada").trigger('play');
         $(".motoAcionada").prop("currentTime", 0);
         $("#score").text(parseInt($("#score").text()) + 1);
+        $finalScore = $finalScore += 1;
         $($img).attr({ "src": `img/${$imgsTheme.dead}` })
         $("h1").addClass("treme")
         setTimeout(function() { $("h1").removeClass("treme") }, 500);
+        return $finalScore;
     }
 }
 
@@ -338,15 +345,15 @@ function saveScore() {
 }
 
 function stopAudio() {
-    $(".mudo").html('<i class="mute" onclick="mute()"> <span class="material-icons"> volume_off</span></i>')
+    $(".trocaBotao").html('<i class="mute" onclick="playAudio()"> <span class="material-icons"> volume_off</span></i>')
         //pause playing
     $(".tema").trigger('pause');
     //set play time to 0
     // $(".tema").prop("currentTime", 0);
 }
 
-function mute() {
-    $(".mudo").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
+function playAudio() {
+    $(".trocaBotao").html('<i class="mute" onclick="stopAudio()"> <span class="material-icons"> volume_up</span></i>')
         //pause playing
     $(".tema").trigger('play');
 }

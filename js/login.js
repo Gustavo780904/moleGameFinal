@@ -19,4 +19,5 @@ $(document).ready(function() {
             alert("Digite o usuário e a senha!");
 
     });
+
 });
