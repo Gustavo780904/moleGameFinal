@@ -164,12 +164,12 @@ function stop() {
     $("main").removeClass("ponteiro")
     $("#chrono").text($timeGame);
     $(".motoLigada").trigger('pause');
-    $("#board").css({ "width": $boardWidth, "height": $boardHeight, opacity: 0 })
+    $("#board").css({ "width": $boardWidth, "height": $boardHeight, opacity: 0});
 }
 
 function exit() {
     pause();
-    alertWifi(`Deseja realmente sair do jogo?`, false, 0, "img/fim.jpg", "50", true)
+    alertWifi(`Deseja realmente sair do jogo?`, false, 0, "img/fim.png", "50", true)
         // window.open("login.html", "_self")
 }
 
