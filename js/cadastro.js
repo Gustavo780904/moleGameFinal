@@ -18,12 +18,12 @@ $(document).ready(function() {
         else if (!$user && !$pwd && !$pwdconf)
             alert('Digite um nome de usuário, uma senha e depois confirme-a')
         else if ($user && $pwd && $pwdconf && $pwd == $pwdconf) {
-            $.getJSON("http://localhost:8080/user", function($registros) {
+            $.getJSON("https://molegameapi.herokuapp.com/user/", function($registros) {
                 console.log($registros)
                 if ($registros.filter($registros => $registros.username == $user && $registros.pwd == $pwd).length > 0)
                     alert("Usuário já cadastrado, tente outro nome de usuário!") //melhorar com reset de senha
                 else
-                    axios.post("http://localhost:8080/user", data, alerta());
+                    axios.post("https://molegameapi.herokuapp.com/user/", data, alerta());
 
                 function alerta() {
                     alert("Cadastro realizado com sucesso");

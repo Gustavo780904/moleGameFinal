@@ -3,7 +3,7 @@ $(document).ready(function() {
         let $user = $("#user").val();
         let $pwd = $("#pwd").val();
         if ($user && $pwd) {
-            $.getJSON("http://localhost:8080/user", function($registros) {
+            $.getJSON("https://molegameapi.herokuapp.com/user/", function($registros) {
 
 
                 if ($registros.filter($usuario => $usuario.username == $user && $usuario.pwd == $pwd).length > 0) {
