@@ -21,7 +21,7 @@ var $score;
 // var $piscaChrono = 0;
 $(document).ready(function() {
 
-    $.getJSON("http://localhost:8080/user", json);
+    $.getJSON("https://molegameapi.herokuapp.com/user", json);
 
     function json(json) {
         $users = json
@@ -341,12 +341,12 @@ function username() {
 
 function saveScore() {
     let data = { "score": $score, "level": $actualLevel }
-    axios.post("http://localhost:8080/user/" + $idUser + "/score", data);
+    axios.post("https://molegameapi.herokuapp.com/user/" + $idUser + "/score", data);
 }
 
 function stopAudio() {
     $(".trocaBotao").html('<i class="mute" onclick="playAudio()"> <span class="material-icons"> volume_off</span></i>')
-        //pause playing
+     
     $(".tema").trigger('pause');
     //set play time to 0
     // $(".tema").prop("currentTime", 0);
