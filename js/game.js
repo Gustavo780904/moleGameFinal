@@ -180,7 +180,7 @@ function exit() {
 
 function startChronoGame() {
     let $secondsFormat = (--$timeGame).toLocaleString("pt-br", { minimumIntegerDigits: 2 });
-    ($timeGame >= 0) ? $("#chrono").text($secondsFormat): endGame();
+    ($timeGame > 0) ? $("#chrono").text($secondsFormat): endGame();
     ($timeGame <= 5) ? ($(".pisca").html('<p>Time: 00:<span class="piscaChrono" id="chrono">00</span></p>'), $("#chrono").text($secondsFormat)) : $("#chrono").text($secondsFormat);
 
     // return $piscaChrono += $piscaChrono;
